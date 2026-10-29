@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAY TECH - Pasalang Warehouse Marikina</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tech: {
+                            dark: '#080C14',
+                            card: '#111827',
+                            border: '#1F2937',
+                            neon: '#00FF66',
+                            green: '#00CC55',
+                            cyan: '#06B6D4',
+                            blue: '#3B82F6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Tech Grid Background */
+        .tech-bg {
+            background-color: #060911;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 102, 0.04) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 25%),
+                linear-gradient(rgba(31, 41, 55, 0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(31, 41, 55, 0.25) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+        }
+
+        /* Styled JAY TECH Watermark Background */
+        .watermark-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+            opacity: 0.035;
+            white-space: nowrap;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080C14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00FF66;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .watermark-overlay {
+                display: none !important;
+            }
+            table {
+                border: 1px solid #ccc !important;
+            }
+            th, td {
+                color: black !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body class="tech-bg text-gray-200 min-h-screen font-sans relative flex flex-col justify-between overflow-x-hidden">
+
+    <!-- JAY TECH Watermark Background Overlay -->
+    <div class="watermark-overlay text-center select-none">
+        <div class="flex items-center justify-center gap-8">
+            <i class="fa-solid fa-microchip text-[20vw] text-emerald-400"></i>
+            <div class="font-tech font-black text-[24vw] tracking-wider text-emerald-400">
+                JAY TECH
+            </div>
+        </div>
+        <div class="font-tech text-[5vw] tracking-[0.35em] text-cyan-400 font-bold -mt-10">
+            PASALANG WAREHOUSE MARIKINA
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="relative z-10 flex-grow flex flex-col">
+        
+        <!-- Header Nav -->
+        <header class="no-print border-b border-tech-border bg-tech-card/80 backdrop-blur-md sticky top-0 z-30 px-4 lg:px-8 py-3.5 shadow-2xl">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <!-- Brand Identity -->
+                <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-500 p-0.5 shadow-lg shadow-emerald-500/20">
+                        <div class="w-full h-full bg-tech-dark rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-xl text-emerald-400 animate-pulse"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-tech font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
+                                JAY TECH
+                            </span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 font-bold">SYSTEM v2.5</span>
+                        </div>
+                        <h1 class="text-xs text-gray-400 font-medium tracking-widest uppercase">
+                            Pasalang Warehouse Marikina Management
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-end">
+                    <button onclick="openRecordModal()" class="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm rounded-xl shadow-lg shadow-emerald-900/40 transition active:scale-95">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span>Add New Entry</span>
+                    </button>
+                    
+                    <button onclick="openBranchModal()" class="flex items-center gap-2 px-3.5 py-2 bg-gray-800 hover:bg-gray-700 text-cyan-400 border border-gray-700 hover:border-cyan-500/50 font-semibold text-sm rounded-xl transition">
+                        <i class="fa-solid fa-code-branch"></i>
+                        <span class="hidden sm:inline">Manage Branches</span>
+                    </button>
+
+                    <button onclick="clearAllRecords()" class="flex items-center gap-1.5 px-3.5 py-2 bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-800/60 font-semibold text-sm rounded-xl transition" title="Burahin Lahat ng Records">
+                        <i class="fa-solid fa-trash-arrow-up"></i>
+                        <span class="hidden sm:inline">Burahin Lahat</span>
+                    </button>
+
+                    <button onclick="exportToCSV()" class="p-2.5 bg-gray-800 hover:bg-gray-700 text-emerald-400 rounded-xl border border-gray-700 transition" title="Export to CSV">
+                        <i class="fa-solid fa-file-csv"></i>
+                    </button>
+
+                    <button onclick="window.print()" class="p-2.5 bg-gray-800 hover:bg-gray-700 text-cyan-400 rounded-xl border border-gray-700 transition" title="Print Report">
+                        <i class="fa-solid fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 flex-grow space-y-6">
+
+            <!-- Banner Header -->
+            <div class="bg-gradient-to-r from-emerald-950/50 via-tech-card to-cyan-950/40 border border-emerald-500/30 rounded-2xl p-5 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            Live Inventory & Delivery Log
+                        </div>
+                        <h2 class="text-2xl lg:text-3xl font-black text-white font-tech tracking-wide">
+                            PASALANG WAREHOUSE MARIKINA
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                            Tracking logistics, sellers, arrival dates & times &bull; Powered by <span class="text-emerald-400 font-semibold">JAY TECH</span>
+                        </p>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="bg-tech-dark/80 border border-gray-800 rounded-xl p-3 text-center min-w-[95px]">
+                            <span class="text-[11px] text-gray-400 uppercase font-semibold block">Total Logs</span>
+                            <span id="stat-total" class="text-xl font-bold text-white font-mono">0</span>
+                        </div>
+                        <div class="bg-emerald-950/30 border border-emerald-800/40 rounded-xl p-3 text-center min-w-[95px]">
+                            <span class="text-[11px] text-emerald-400 uppercase font-semibold block">Complete</span>
+                            <span id="stat-complete" class="text-xl font-bold text-emerald-400 font-mono">0</span>
+                        </div>
+                        <div class="bg-rose-950/30 border border-rose-800/40 rounded-xl p-3 text-center min-w-[95px]">
+                            <span class="text-[11px] text-rose-400 uppercase font-semibold block">Missing</span>
+                            <span id="stat-missing" class="text-xl font-bold text-rose-400 font-mono">0</span>
+                        </div>
+                        <div class="bg-cyan-950/30 border border-cyan-800/40 rounded-xl p-3 text-center min-w-[95px]">
+                            <span class="text-[11px] text-cyan-400 uppercase font-semibold block">Branches</span>
+                            <span id="stat-branches" class="text-xl font-bold text-cyan-400 font-mono">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters & Search Toolbar -->
+            <div class="no-print bg-tech-card/90 border border-tech-border rounded-xl p-4 shadow-xl backdrop-blur-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+                
+                <!-- Search Box -->
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Search Seller Name or Remarks..." class="w-full bg-tech-dark border border-gray-700 rounded-xl pl-10 pr-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-emerald-500 transition">
+                </div>
+
+                <!-- Dropdown Filters -->
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                    <!-- Branch Filter -->
+                    <div class="flex-1 sm:flex-initial">
+                        <select id="branchFilter" onchange="applyFilters()" class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-emerald-500">
+                            <option value="">All Branches</option>
+                            <!-- Dynamically filled -->
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="flex-1 sm:flex-initial">
+                        <select id="statusFilter" onchange="applyFilters()" class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-emerald-500">
+                            <option value="">All Statuses</option>
+                            <option value="COMPLETE">COMPLETE</option>
+                            <option value="MISSING">MISSING</option>
+                        </select>
+                    </div>
+
+                    <!-- Reset Filters Button -->
+                    <button onclick="resetFilters()" class="px-3.5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm border border-gray-700 transition" title="Reset Filters">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="bg-tech-card/90 border border-tech-border rounded-xl shadow-2xl overflow-hidden backdrop-blur-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-900/90 text-gray-400 text-xs font-semibold tracking-wider uppercase border-b border-gray-800">
+                                <th class="py-4 px-4">Seller Name</th>
+                                <th class="py-4 px-4">Buying Date</th>
+                                <th class="py-4 px-4">Arrive Date</th>
+                                <th class="py-4 px-4">Arrive Time</th>
+                                <th class="py-4 px-4">Branch</th>
+                                <th class="py-4 px-4 text-center">Status</th>
+                                <th class="py-4 px-4">Remarks</th>
+                                <th class="py-4 px-4 text-center no-print">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-gray-800/60 text-sm font-medium">
+                            <!-- Rows injected dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden py-14 text-center">
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gray-800/60 flex items-center justify-center text-gray-500">
+                        <i class="fa-solid fa-box-open text-3xl"></i>
+                    </div>
+                    <p class="text-gray-300 font-semibold text-base">Walang nahanap na record.</p>
+                    <p class="text-xs text-gray-500 mt-1">Pindutin ang "+ Add New Entry" para mag-input ng panibagong data.</p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="no-print border-t border-tech-border bg-tech-card/60 backdrop-blur-md py-4 mt-8">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>Pasalang Warehouse Marikina Management System</span>
+                </div>
+                <div class="font-tech tracking-wider text-gray-400">
+                    POWERED BY <span class="text-emerald-400 font-bold">JAY TECH</span> &copy; 2026
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Modal: Add / Edit Record -->
+    <div id="recordModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-tech-card border border-tech-border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden relative">
+            
+            <div class="bg-gradient-to-r from-emerald-950 to-gray-900 border-b border-gray-800 p-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <i id="modalIcon" class="fa-solid fa-plus-circle text-emerald-400 text-lg"></i>
+                    <h3 id="modalTitle" class="font-tech font-bold text-lg text-white">Add New Record</h3>
+                </div>
+                <button onclick="closeRecordModal()" class="text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <form id="recordForm" onsubmit="saveRecord(event)" class="p-6 space-y-4">
+                <input type="hidden" id="editIndex" value="-1">
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Seller Name</label>
+                    <input type="text" id="inputSeller" required placeholder="e.g. SIR FELIZ" class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Buying Date</label>
+                        <input type="date" id="inputBuyingDate" required class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Branch</label>
+                        <select id="inputBranch" required class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                            <!-- Filled dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Arrive Date</label>
+                        <input type="date" id="inputArriveDate" class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Arrive Time</label>
+                        <input type="time" id="inputArriveTime" class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Status</label>
+                        <select id="inputStatus" required class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                            <option value="COMPLETE">COMPLETE</option>
+                            <option value="MISSING">MISSING</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Remarks</label>
+                        <input type="text" id="inputRemarks" placeholder="Optional (e.g. BRANCH)" class="w-full bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-800 mt-6">
+                    <button type="button" onclick="closeRecordModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm shadow-lg shadow-emerald-900/30 transition">
+                        Save Record
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Branch Management -->
+    <div id="branchModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-tech-card border border-tech-border rounded-2xl w-full max-w-md shadow-2xl overflow-hidden relative">
+            
+            <div class="bg-gradient-to-r from-cyan-950 to-gray-900 border-b border-gray-800 p-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-code-branch text-cyan-400 text-lg"></i>
+                    <h3 class="font-tech font-bold text-lg text-white">Manage Branches</h3>
+                </div>
+                <button onclick="closeBranchModal()" class="text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <!-- Add New Branch Input -->
+                <form onsubmit="addNewBranch(event)" class="flex items-center gap-2">
+                    <input type="text" id="newBranchInput" required placeholder="New Branch Name..." class="flex-1 bg-tech-dark border border-gray-700 rounded-xl px-3.5 py-2 text-sm text-gray-200 focus:outline-none focus:border-cyan-500 uppercase">
+                    <button type="submit" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-xl text-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </button>
+                </form>
+
+                <!-- List of Current Branches -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-2">Existing Branches List</label>
+                    <div id="branchListContainer" class="max-h-60 overflow-y-auto space-y-1.5 pr-1 border border-gray-800 rounded-xl p-2 bg-tech-dark/50">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-gray-800 flex justify-between items-center">
+                    <button type="button" onclick="resetBranchesToDefault()" class="text-xs text-rose-400 hover:underline">
+                        Reset Branches to Default
+                    </button>
+                    <button type="button" onclick="closeBranchModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm transition">
+                        Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 opacity-0 translate-y-5 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-xl"></i>
+        <span id="toastMessage" class="text-sm font-medium">Notification message</span>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Initial Default Branches
+        const defaultBranches = [
+            "BACOLOD", "BATANGAS", "BATAAN", "BICOL", "BULACAN", "CAVITE", 
+            "CEBU 1", "CEBU 2", "CUBAO", "DAVAO", "LAGUNA", "MONUMENTO", 
+            "OLONGAPO", "PC KINGDOM", "RODRIGUEZ", "SAMPALOC", "SANDIGAN"
+        ];
+
+        // State Management
+        let branches = JSON.parse(localStorage.getItem('jaytech_branches')) || [...defaultBranches];
+        let records = JSON.parse(localStorage.getItem('jaytech_pasalang_records')) || [];
+
+        // Save State to LocalStorage
+        function saveState() {
+            localStorage.setItem('jaytech_branches', JSON.stringify(branches));
+            localStorage.setItem('jaytech_pasalang_records', JSON.stringify(records));
+        }
+
+        // Branch Dropdown Refresh
+        function populateBranchDropdowns() {
+            branches.sort();
+            
+            // Filter Dropdown
+            const branchFilter = document.getElementById('branchFilter');
+            const currentFilterVal = branchFilter.value;
+            branchFilter.innerHTML = '<option value="">All Branches</option>';
+            
+            // Form Dropdown
+            const inputBranch = document.getElementById('inputBranch');
+            const currentFormVal = inputBranch.value;
+            inputBranch.innerHTML = '';
+
+            branches.forEach(b => {
+                // Filter option
+                const optFilter = document.createElement('option');
+                optFilter.value = b;
+                optFilter.textContent = b;
+                branchFilter.appendChild(optFilter);
+
+                // Input option
+                const optInput = document.createElement('option');
+                optInput.value = b;
+                optInput.textContent = b;
+                inputBranch.appendChild(optInput);
+            });
+
+            branchFilter.value = currentFilterVal;
+            if (branches.includes(currentFormVal)) {
+                inputBranch.value = currentFormVal;
+            }
+
+            renderBranchManagerList();
+        }
+
+        // Render Branch Manager UI inside Modal
+        function renderBranchManagerList() {
+            const container = document.getElementById('branchListContainer');
+            container.innerHTML = '';
+
+            branches.forEach((branch, idx) => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between bg-gray-900 border border-gray-800 rounded-lg px-3 py-1.5 text-sm";
+                item.innerHTML = `
+                    <span class="text-gray-200 font-medium">${escapeHtml(branch)}</span>
+                    <button onclick="removeBranch(${idx})" class="text-gray-500 hover:text-rose-400 transition" title="Delete Branch">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Add Custom Branch
+        function addNewBranch(e) {
+            e.preventDefault();
+            const input = document.getElementById('newBranchInput');
+            const val = input.value.trim().toUpperCase();
+
+            if (!val) return;
+
+            if (branches.includes(val)) {
+                showToast("Mayroon nang ganiyang branch sa listahan.");
+                return;
+            }
+
+            branches.push(val);
+            saveState();
+            populateBranchDropdowns();
+            input.value = '';
+            showToast(`Naisama na ang branch na "${val}"!`);
+        }
+
+        // Remove Branch
+        function removeBranch(idx) {
+            const removed = branches[idx];
+            branches.splice(idx, 1);
+            saveState();
+            populateBranchDropdowns();
+            showToast(`Tinanggal ang branch na "${removed}".`);
+        }
+
+        // Reset Branches to Default List
+        function resetBranchesToDefault() {
+            if (confirm("Gusto mo bang i-reset ang mga branch sa orihinal na listahan?")) {
+                branches = [...defaultBranches];
+                saveState();
+                populateBranchDropdowns();
+                showToast("Na-reset na ang mga branch!");
+            }
+        }
+
+        // Clear All Records
+        function clearAllRecords() {
+            if (records.length === 0) {
+                showToast("Wala nang nakaimbak na record.");
+                return;
+            }
+            if (confirm("Sigurado ka bang gusto mong BURAHIN LAHAT ng nakainput na records?")) {
+                records = [];
+                saveState();
+                applyFilters();
+                showToast("Nabura na ang lahat ng records!");
+            }
+        }
+
+        // Render Main Data Table
+        function renderTable(dataToRender = records) {
+            const tbody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            tbody.innerHTML = '';
+
+            if (dataToRender.length === 0) {
+                emptyState.classList.remove('hidden');
+                updateStats();
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            dataToRender.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-800/50 transition border-b border-gray-800/40";
+
+                const isMissing = item.status === 'MISSING';
+                const sellerClass = isMissing ? 'bg-rose-950/30 text-rose-300 font-bold' : 'text-gray-200';
+
+                // Status Badge styling (Strictly COMPLETE or MISSING)
+                let statusBadge = '';
+                if (item.status === 'COMPLETE') {
+                    statusBadge = `<span class="px-3 py-1 rounded-full bg-emerald-900/80 border border-emerald-500/50 text-emerald-200 text-xs font-bold inline-flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> COMPLETE</span>`;
+                } else {
+                    statusBadge = `<span class="px-3 py-1 rounded-full bg-rose-900/80 border border-rose-500/50 text-rose-200 text-xs font-bold inline-flex items-center gap-1.5"><i class="fa-solid fa-circle-exclamation"></i> MISSING</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 ${sellerClass}">
+                        <div class="flex items-center gap-2">
+                            ${isMissing ? '<i class="fa-solid fa-triangle-exclamation text-rose-500 animate-pulse"></i>' : ''}
+                            <span>${escapeHtml(item.seller)}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 text-gray-300 font-mono text-xs">${formatDisplayDate(item.buyingDate)}</td>
+                    <td class="py-3 px-4 text-gray-300 font-mono text-xs">${formatDisplayDate(item.arriveDate)}</td>
+                    <td class="py-3 px-4 text-gray-400 font-mono text-xs">${formatDisplayTime(item.arriveTime)}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-cyan-950/80 text-cyan-300 border border-cyan-700/50">
+                            ${escapeHtml(item.branch)}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center">${statusBadge}</td>
+                    <td class="py-3 px-4 text-gray-400 text-xs font-mono">${escapeHtml(item.remarks || '-')}</td>
+                    <td class="py-3 px-4 text-center no-print">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="editRecord(${index})" class="p-1.5 bg-gray-800 hover:bg-emerald-900/60 text-emerald-400 hover:text-emerald-300 rounded-lg transition" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteRecord(${index})" class="p-1.5 bg-gray-800 hover:bg-rose-900/60 text-rose-400 hover:text-rose-300 rounded-lg transition" title="Delete">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            updateStats();
+        }
+
+        // Update Header Dashboard Stats
+        function updateStats() {
+            document.getElementById('stat-total').innerText = records.length;
+            document.getElementById('stat-complete').innerText = records.filter(r => r.status === 'COMPLETE').length;
+            document.getElementById('stat-missing').innerText = records.filter(r => r.status === 'MISSING').length;
+            
+            const uniqueBranches = new Set(records.map(r => r.branch));
+            document.getElementById('stat-branches').innerText = uniqueBranches.size;
+        }
+
+        // Filtering & Search
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const branch = document.getElementById('branchFilter').value;
+            const status = document.getElementById('statusFilter').value;
+
+            const filtered = records.filter(item => {
+                const matchesQuery = item.seller.toLowerCase().includes(query) || 
+                                     (item.remarks && item.remarks.toLowerCase().includes(query));
+                const matchesBranch = branch === "" || item.branch === branch;
+                const matchesStatus = status === "" || item.status === status;
+
+                return matchesQuery && matchesBranch && matchesStatus;
+            });
+
+            renderTable(filtered);
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('branchFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            renderTable(records);
+        }
+
+        // Record Modal Handlers
+        function openRecordModal(isEdit = false) {
+            const modal = document.getElementById('recordModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalIcon = document.getElementById('modalIcon');
+
+            if (!isEdit) {
+                document.getElementById('recordForm').reset();
+                document.getElementById('editIndex').value = "-1";
+                modalTitle.innerText = "Add New Record";
+                modalIcon.className = "fa-solid fa-plus-circle text-emerald-400 text-lg";
+                
+                // Pre-fill today's date
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('inputBuyingDate').value = today;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeRecordModal() {
+            document.getElementById('recordModal').classList.add('hidden');
+        }
+
+        function openBranchModal() {
+            renderBranchManagerList();
+            document.getElementById('branchModal').classList.remove('hidden');
+        }
+
+        function closeBranchModal() {
+            document.getElementById('branchModal').classList.add('hidden');
+        }
+
+        function editRecord(index) {
+            const item = records[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('inputSeller').value = item.seller;
+            document.getElementById('inputBuyingDate').value = item.buyingDate || '';
+            document.getElementById('inputArriveDate').value = item.arriveDate || '';
+            document.getElementById('inputArriveTime').value = item.arriveTime || '';
+            document.getElementById('inputBranch').value = item.branch;
+            document.getElementById('inputStatus').value = item.status;
+            document.getElementById('inputRemarks').value = item.remarks || '';
+
+            document.getElementById('modalTitle').innerText = "Edit Record";
+            document.getElementById('modalIcon').className = "fa-solid fa-pen-to-square text-cyan-400 text-lg";
+
+            openRecordModal(true);
+        }
+
+        function saveRecord(e) {
+            e.preventDefault();
+
+            const editIndex = parseInt(document.getElementById('editIndex').value);
+            const newRecord = {
+                seller: document.getElementById('inputSeller').value.trim(),
+                buyingDate: document.getElementById('inputBuyingDate').value,
+                arriveDate: document.getElementById('inputArriveDate').value,
+                arriveTime: document.getElementById('inputArriveTime').value,
+                branch: document.getElementById('inputBranch').value,
+                status: document.getElementById('inputStatus').value,
+                remarks: document.getElementById('inputRemarks').value.trim()
+            };
+
+            if (editIndex >= 0) {
+                records[editIndex] = newRecord;
+                showToast("Na-update na ang record!");
+            } else {
+                records.unshift(newRecord);
+                showToast("Nairerehistro na ang bagong record!");
+            }
+
+            saveState();
+            applyFilters();
+            closeRecordModal();
+        }
+
+        function deleteRecord(index) {
+            if (confirm("Sigurado ka bang gusto mong burahin ang record na ito?")) {
+                records.splice(index, 1);
+                saveState();
+                applyFilters();
+                showToast("Nabura na ang record.");
+            }
+        }
+
+        // CSV Export
+        function exportToCSV() {
+            if (records.length === 0) {
+                showToast("Walang datos na pwedeng i-export.");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "SELLER NAME,BUYING DATE,ARRIVE DATE,ARRIVE TIME,BRANCH,STATUS,REMARKS\n";
+
+            records.forEach(r => {
+                csvContent += `"${r.seller}","${r.buyingDate || ''}","${r.arriveDate || ''}","${r.arriveTime || ''}","${r.branch}","${r.status}","${r.remarks || ''}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `JAY_TECH_Pasalang_Warehouse_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Helpers
+        function formatDisplayDate(dateStr) {
+            if (!dateStr) return '-';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                return `${parts[1]}/${parts[2]}/${parts[0]}`;
+            }
+            return dateStr;
+        }
+
+        function formatDisplayTime(timeStr) {
+            if (!timeStr) return '-';
+            const [h, m] = timeStr.split(':');
+            if (h === undefined || m === undefined) return timeStr;
+            let hours = parseInt(h, 10);
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${hours}:${m} ${ampm}`;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+            }, 3000);
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // Initialize Page
+        window.onload = function() {
+            populateBranchDropdowns();
+            renderTable();
+        };
+    </script>
+</body>
+</html>
